@@ -1,0 +1,85 @@
+{
+  "$schema": "https://github.com/Azure/data-api-builder/releases/download/v0.10.23/dab.draft.schema.json",
+  "data-source": {
+    "database-type": "mssql",
+    "connection-string": "@env('my-connection-string')",
+    "options": {
+      "set-session-context": true
+    }
+  },
+  "runtime": {
+    "rest": {
+      "enabled": true,
+      "path": "/api",
+      "request-body-strict": true
+    },
+    "graphql": {
+      "enabled": false,
+      "path": "/graphql",
+      "allow-introspection": true
+    },
+    "host": {
+      "cors": {
+        "origins": [],
+        "allow-credentials": false
+      },
+      "authentication": {
+        "provider": "StaticWebApps"
+      },
+      "mode": "development"
+    }
+  },
+  "entities": {
+    "dbo.zips": {
+      "source": {
+        "object": "[dbo].[zips]",
+        "type": "table",
+        "key-fields": [
+          "postal_code"
+        ]
+      },
+      "graphql": {
+        "enabled": true,
+        "type": {
+          "singular": "dbo.zips",
+          "plural": "dbo.zips"
+        }
+      },
+      "rest": {
+        "enabled": true,
+        "path": "/zips"
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            {
+              "action": "create"
+            },
+            {
+              "action": "read"
+            },
+            {
+              "action": "update"
+            },
+            {
+              "action": "delete"
+            }
+          ]
+        }
+      ],
+      "mappings": {
+        "country_code": "country_code",
+        "postal_code": "postal_code",
+        "city": "city",
+        "state_long": "state_long",
+        "state_short": "state_short",
+        "county_name": "county_name",
+        "county_code": "county_code",
+        "latitude": "latitude",
+        "longitude": "longitude",
+        "accuracy": "accuracy"
+      }
+    }
+  }
+}
